@@ -134,15 +134,13 @@ def run_model(model):
             prediction_history.popleft()
         prediction_history.append(index)
 
-        print(prediction_history)
-
-        # incresase volume if net predicts thumbs up
-        if prediction[0][1] > 0.8 and prediction_history.count(1) > 3:
+        # incresase volume if net consistantly predicts thumbs up
+        if prediction[0][1] > 0.80 and prediction_history.count(1) > 4:
             volume = int(volume) + 5
             osascript.run('set volume output volume ' + str(volume))
 
-        # decrease volume if net predicts thumbs down
-        if prediction[0][2] > 0.8 and prediction_history.count(2) > 3:
+        # decrease volume if net consistantly predicts thumbs down
+        if prediction[0][2] > 0.80 and prediction_history.count(2) > 4:
             volume = int(volume) - 5
             osascript.run('set volume output volume ' + str(volume))
 
@@ -153,7 +151,7 @@ def run_model(model):
         # add text
         cv2.putText(img, str(prediction), (0, 70), cv2.FONT_HERSHEY_SIMPLEX,  
                      1, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.imshow('Up Down!', img)
+        cv2.imshow('Hand Command', img)
 
         # wait for escape key to exit
         if cv2.waitKey(10) == 27: 
@@ -161,7 +159,7 @@ def run_model(model):
 
     cv2.destroyAllWindows()
 
-# create_training_data('train.csv')
-net = load_model('net.pkl')
+create_training_data('train.csv')
+net = create_model('net.pkl', 'train.csv')
 run_model(net)
 
