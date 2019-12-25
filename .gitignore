@@ -1,5 +1,7 @@
 # Ignore all pickled objects
 net.pkl
+*.pkl
 
 # Ignore training data
 train.csv
+*.csv
