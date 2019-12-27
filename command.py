@@ -28,7 +28,7 @@ def create_training_data(training_filepath):
 
         # convert image to grayscale, resize to 160x90, and flip
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        img = cv2.resize(img, (80, 45))
+        img = cv2.resize(img, (160, 90))
         img = cv2.flip(img, 1)
         
         # indicating no hand gesture
@@ -112,7 +112,7 @@ def run_model(model):
 
         # convert image to grayscale, resize to 160x90, and flip
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        img = cv2.resize(img, (80, 45))
+        img = cv2.resize(img, (160, 90))
         img = cv2.flip(img, 1)
     
         # get system output volume at each frame
@@ -159,7 +159,7 @@ def run_model(model):
 
     cv2.destroyAllWindows()
 
-create_training_data('train.csv')
+# create_training_data('train.csv')
 net = create_model('net.pkl', 'train.csv')
 run_model(net)
 
